@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto Slab' rel='stylesheet'>
+    <title>{% block title %} Pokemon | Trainers {% endblock %}</title>
+  </head>
+  <body>
+
+    <main>
+      {% block content %}
+        <a href="{% url 'trainer-add' %}"><button class="btn-add">Add New Trainer</button></a><br>
+          <section class="trainers-container">
+            <table class="styled-table">
+              <tbody>
+                <tr>
+                  <th>Trainer Name</th>
+                  <th>Birthdate</th>
+                  <th>Location</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              {% for object in object_list %}
+                <tr>
+                  <td>{{ object.name }}</td>
+                  <td>{{ object.birthdate }}</td>
+                  <td>{{ object.location }}</td>
+                  <td>{{ object.email}} </td>
+                  <td>
+                    <a href="trainer_list/{{ object.id }}"><button class="btn-update">Edit</button></a> |
+                    <a  href="trainer_list/{{ object.id }}/delete" ><button class="btn-delete">Delete</button></a>
+                  </td>
+                </tr>
+              {% empty %}
+              {% endfor %}
+              </tbody>
+            </table>
+          </section>
+          <div>
+            {% include 'includes/pagination.html' %}
+          </div>  
+      {% endblock %}
+    </main>
+  </body>
+</html>
